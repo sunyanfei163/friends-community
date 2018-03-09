@@ -15,6 +15,7 @@
 		<config>src/main/resources/spring-redis.xml</config>
 		<config>src/main/resources/spring/basic/spring-user.xml</config>
 		<config>src/main/resources/spring-mongo.xml</config>
+		<config>src/main/resources/spring-shiro.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

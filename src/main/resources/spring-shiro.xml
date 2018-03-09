@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+	<!-- 自定义域realm -->
+	<bean id="myRealm" class="com.sun.shiro.MyRealm"/>
+	
+	<!-- 安全管理器 ref对象 -->
+	<bean id="securityManager" class="org.apache.shiro.mgt.DefaultSecurityManager"
+		p:realm-ref="myRealm"/>
+		
+	<!-- shiro filter -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<!-- 安全管理器 必须 -->
+		<property name="securityManager" ref="securityManager"/>
+		<!-- 身份认证失败 认证提交的地址 -->
+		<property name="loginUrl" value="/index.jsp"/>
+		<!-- 权限认证失败  没有权限认证提交的地址 -->
+		<property name="unauthorizedUrl" value="/unauthorized.jsp"/>
+		<!-- shiro 连接约束配置，即过滤链的定义 -->
+		<property name="filterChainDefinitions">
+			<value>
+				<!-- 对静态资源设置匿名访问 -->
+				/login = anon
+				<!-- /** = authc 所有url必须认证通过才能访问 -->
+				/admin* = authc
+			</value>
+		</property>
+	</bean>
+	
+	<!-- shiro 生命周期处理器 -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		<property name="securityManager" ref="securityManager"/>
+	</bean>
+	
+
+</beans>

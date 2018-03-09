@@ -15,5 +15,15 @@
 		<result property="updatedBy" column="UPDATED_BY"/>
 	</resultMap>
 	
+	<select id="getByUserName" parameterType="string" resultMap="userMap">
+		SELECT * FROM t_user WHERE USER_NAME = #{userName}
+	</select>
+	
+	<select id="queryRolesByName" parameterType="string" resultMap="string">
+		SELECT R.ROLE_NAME FROM t_user U, user_role UR, role R
+		WHERE U.ID = UR.USER_ID
+		AND UR.ROLE_ID = R.ID
+		AND U.USER_NAME = #{userName}
+	</select>
 	
 </mapper>

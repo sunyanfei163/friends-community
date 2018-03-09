@@ -16,4 +16,5 @@
 	<import resource="classpath:spring-transaction.xml"/>
 	<import resource="classpath:spring/**/spring-*.xml"/>
 	<import resource="classpath:spring-mongo.xml"/>
+	<import resource="classpath:spring-shiro.xml"/>
 </beans>
