@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beansProjectDescription>
+	<version>1</version>
+	<pluginVersion><![CDATA[3.9.2.201712210913-RELEASE]]></pluginVersion>
+	<configSuffixes>
+		<configSuffix><![CDATA[xml]]></configSuffix>
+	</configSuffixes>
+	<enableImports><![CDATA[false]]></enableImports>
+	<configs>
+		<config>src/main/resources/spring-datasource.xml</config>
+		<config>src/main/resources/spring-transaction.xml</config>
+		<config>src/main/resources/applicationContext.xml</config>
+		<config>src/main/resources/spring-mvc.xml</config>
+		<config>src/main/resources/spring-mybatis.xml</config>
+		<config>src/main/resources/spring-redis.xml</config>
+		<config>src/main/resources/spring/basic/spring-user.xml</config>
+		<config>src/main/resources/spring-mongo.xml</config>
+	</configs>
+	<autoconfigs>
+	</autoconfigs>
+	<configSets>
+	</configSets>
+</beansProjectDescription>

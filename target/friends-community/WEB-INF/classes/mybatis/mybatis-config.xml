@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<!-- 是否允许缓存 -->
+		<setting name="cacheEnabled" value="true" />
+		<!-- 是否懒加载 -->
+		<setting name="lazyLoadingEnabled" value="true" />
+		<!-- 是否允许单一查询返回多结果集 -->
+		<setting name="multipleResultSetsEnabled" value="true" />
+		<!-- 是否列标签代表列名 -->
+		<setting name="useColumnLabel" value="true" />
+		<!-- 是否强制jdbc自动生成主键 -->
+		<setting name="useGeneratedKeys" value="false" />
+		<!-- 如何自动映射列到字段或属性，NONE取消自动,PARTIAL只会自动映射没有定义嵌套结果集映射的结果集
+			FULL 会自动映射任意复杂的结果集（无论是否嵌套） -->
+		<setting name="autoMappingBehavior" value="PARTIAL" />
+		<!-- 指定发现自动映射目标未知列（或者未知属性类型）的行为
+			NONE 不反应，
+			WARNING输出提醒日志，
+			FAILING失败抛异常 -->
+		<setting name="autoMappingUnknownColumnBehavior" value="WARNING" />
+		<!-- 配置默认执行器 -->
+		<setting name="defaultExecutorType" value="SIMPLE" />
+		<!-- 超时时间，等待数据库相应的时间，xx秒 -->
+		<setting name="defaultStatementTimeout" value="25" />
+		<setting name="defaultFetchSize" value="100" />
+		<!-- 允许嵌套语句使用分页 -->
+		<setting name="safeRowBoundsEnabled" value="false" />
+		<!-- 是否自动驼峰命名，即列到java属性 -->
+		<setting name="mapUnderscoreToCamelCase" value="false" />
+		<setting name="localCacheScope" value="SESSION" />
+		<setting name="jdbcTypeForNull" value="OTHER" />
+		<setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString" />
+	</settings>
+
+	<typeAliases>
+		<typeAlias type="com.sun.baisc.model.User" alias="User"/>
+	</typeAliases>
+</configuration>
