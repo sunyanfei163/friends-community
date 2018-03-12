@@ -6,7 +6,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.apache.ibatis.cache.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.connection.jedis.JedisConnection;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
@@ -34,7 +34,7 @@ public class RedisCache implements Cache {
 	 */
 	public void clear() {
 		rwl.readLock().lock();
-		RedisConnection connection = null;
+		JedisConnection connection = null;
 			try {
 				connection = jedisConnectionFactory.getConnection();
 				connection.flushDb();
@@ -57,11 +57,11 @@ public class RedisCache implements Cache {
 		//先从缓存中去取数据，先加锁
 		rwl.readLock().lock();
 		Object result = null;
-		RedisConnection connection = null;
+		JedisConnection connection = null;
 		try {
 			connection = jedisConnectionFactory.getConnection();
 			RedisSerializer<Object> serializer = new JdkSerializationRedisSerializer();
-			result = serializer.serialize(connection.get(serializer.serialize(key)));
+			result = serializer.deserialize(connection.get(serializer.serialize(key)));
 			logger.info("命中mybatis二级缓存，value=" + result);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -83,7 +83,7 @@ public class RedisCache implements Cache {
 	 */
 	public int getSize() {
 		int result = 0;
-		RedisConnection connection = null;
+		JedisConnection connection = null;
 		try {
 			connection = jedisConnectionFactory.getConnection();
 			result = Integer.parseInt(connection.dbSize().toString());
@@ -100,7 +100,7 @@ public class RedisCache implements Cache {
 	 */
 	public void putObject(Object key, Object value) {
 		rwl.readLock().lock();
-		RedisConnection connection = null;
+		JedisConnection connection = null;
 		try {
 			connection = jedisConnectionFactory.getConnection();
 			RedisSerializer<Object> serializer = new JdkSerializationRedisSerializer();
@@ -120,7 +120,7 @@ public class RedisCache implements Cache {
 	public Object removeObject(Object key) {
 		rwl.readLock().lock();
 		Object result = null;
-		RedisConnection connection = null;
+		JedisConnection connection = null;
 		try {
 			connection = jedisConnectionFactory.getConnection();
 			RedisSerializer<Object> serializer = new JdkSerializationRedisSerializer();

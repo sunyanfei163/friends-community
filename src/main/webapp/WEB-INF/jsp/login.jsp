@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page isELIgnored="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html lang="en" class="app">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>登录</title>
@@ -13,15 +15,15 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/simple-line-icons.css" type="text/css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/app.css" type="text/css" />
 </head>
-<body background="/image/login/bodybg.jpg">
+<body style="height: 100%;" background="${pageContext.request.contextPath}/images/login/bodybg.jpg">
 	<section id="content" class="m-t-lg wrapper-md animated fadeInUp ">
 	<div class="container aside-xl" style="margin-top: 48px;">
 		<a class="navbar-brand block"><span class="h1 font-bold"
-			style="color: #ffffff">登录</span></a>
+			style="color: #ffffff">登录</span></a><br/>
 		<section class="m-b-lg">
-		<form action="javascript:;" method="post">
+		<form action='<c:url value="/login.html"/>' method="post">
 			<div class="form-group">
-				<input type="username" name="username" placeholder="用户名"
+				<input type="username" name="userName" placeholder="用户名"
 					class="form-control  input-lg text-center no-border">
 			</div>
 			<div class="form-group">
@@ -38,9 +40,5 @@
 		</section>
 	</div>
 	</section>
-	<!-- footer -->
-	<footer id="footer">
-	<div class="text-center padder"></div>
-	</footer>
 </body>
 </html>

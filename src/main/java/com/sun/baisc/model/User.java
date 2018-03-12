@@ -1,8 +1,13 @@
 package com.sun.baisc.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class User {
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+public class User implements Serializable{
 
 	private int id;
 
@@ -72,6 +77,11 @@ public class User {
 
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
+	}
+	
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
 	}
 
 }

@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,13 +45,20 @@ public class LoginController {
 		try {
 			subject.login(usernamePasswordToken);
 			logger.info("======登陆成功======");
-			mv.setViewName("success");
+			mv.setViewName("/index");
 		} catch (Exception e) {
 			logger.info("======登录异常======");
 			e.printStackTrace();
 			mv.addObject("errorMsg", "用户名或密码错误，登录失败");
-			mv.setViewName("/index");
+			mv.setViewName("/403");
 		}
 		return mv;
+	}
+	
+	@RequiresRoles("admin")
+	@RequiresPermissions("admin")
+	@RequestMapping(value="/admin")
+	public String xxx() {
+		return "/admin";
 	}
 }
