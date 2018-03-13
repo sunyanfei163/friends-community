@@ -13,6 +13,8 @@
 		<result property="createdBy" column="CREATED_BY"/>
 		<result property="updated" column="UPDATED"/>
 		<result property="updatedBy" column="UPDATED_BY"/>
+		<result property="salt" column="SALT"/>
+		<result property="locked" column="LOCKED"/>
 	</resultMap>
 	
 	<select id="getByUserName" parameterType="string" resultMap="userMap">
@@ -25,5 +27,27 @@
 		AND UR.ROLE_ID = R.ID
 		AND U.USER_NAME = #{userName}
 	</select>
+	
+	<insert id="save" parameterType="User">
+		INSERT INTO t_user (
+			`USER_NAME`,
+			`PASSWORD`,
+			`SALT`,
+			`CREATED`,
+			`CREATED_BY`,
+			`UPDATED`,
+			`UPDATED_BY`
+		)
+		VALUES
+			(
+				#{userName},
+				#{password},
+				#{salt},
+				#{created},
+				#{createdBy},
+				#{updated},
+				#{updatedBy}
+			);
+	</insert>
 	
 </mapper>

@@ -9,4 +9,6 @@ public interface UserDao {
 	public User getByUserName(String userName);
 	
 	public List<String> queryRolesByName(String userName);
+	
+	public boolean save(User user);
 }

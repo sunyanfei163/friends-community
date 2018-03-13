@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -40,9 +41,32 @@ public class LoginController {
 		this.userService = userService;
 	}
 	
+	@RequestMapping("/registerPage")
+	public String registerPage() {
+		return "/register";
+	}
+	
 	@RequestMapping(value="/loginPage")
 	public String loginPage() {
 		return "/login";
+	}
+	
+	@RequestMapping("/register")
+	public String register(User user, HttpServletRequest request, ModelMap mm) {
+		String passwordValid = WebUtils.getCleanParam(request, "passwordValid");
+		String targetUrl = "/loginPage";
+		if(!passwordValid.equals(user.getPassword())) {
+			mm.addAttribute("errorMsg", "ÃÜÂë²»Ò»ÖÂ£¡");
+			targetUrl = "/registerPage";
+		}
+		try {
+			userService.register(user);
+		} catch (Exception e) {
+			logger.info(e.getMessage());
+			mm.addAttribute("errorMsg", "×¢²áÊ§°Ü");
+			targetUrl = "/registerPage";
+		}
+		return targetUrl;
 	}
 	
 	@RequestMapping("/validateCode")

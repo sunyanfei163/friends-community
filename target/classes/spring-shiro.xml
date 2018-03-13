@@ -31,12 +31,11 @@
 		<!-- shiro 连接约束配置，即过滤链的定义 -->
 		<property name="filterChainDefinitions">
 			<value>
-				<!-- 对静态资源设置匿名访问 -->
-				/login = anon
+				/login* = anon
+				/register* = anon
 				<!-- /** = authc 所有url必须认证通过才能访问 -->
 				/admin* = authc
 				/logout = logout
-				/** = authc
 			</value>
 		</property>
 	</bean>

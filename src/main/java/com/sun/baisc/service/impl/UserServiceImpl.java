@@ -1,5 +1,6 @@
 package com.sun.baisc.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.shiro.crypto.hash.SimpleHash;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.sun.baisc.dao.UserDao;
 import com.sun.baisc.model.User;
 import com.sun.baisc.service.UserService;
+import com.sun.util.StringUtil;
 
 public class UserServiceImpl implements UserService{
 
@@ -28,9 +30,10 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	public boolean register(User user) {
+		user.setSalt(StringUtil.getRandomStr(5));
 		user = encryption(user);
-		
-		return true;
+		user.setCreated(new Date());
+		return userDao.save(user);
 	}
 
 	private User encryption(User user) {

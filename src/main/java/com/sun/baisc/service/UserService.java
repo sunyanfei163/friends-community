@@ -9,4 +9,6 @@ public interface UserService {
 	public User getUserByUserName(String userName);
 	
 	public List<String> queryRolesByName(String userName);
+	
+	public boolean register(User user);
 }

@@ -59,6 +59,9 @@
 				id="validate-submit">
 				<i class="icon-arrow-right pull-right"></i><span class="m-r-n-lg">登录</span>
 			</button>
+			<a class="btn btn-lg btn-danger lt b-white b-2x btn-block" href="<%=basePath%>/registerPage.html">
+				<i class="icon-arrow-right pull-right"></i><span class="m-r-n-lg">注册</span>
+			</a>
 		</form>
 		</section>
 	</div>
