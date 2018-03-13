@@ -6,7 +6,14 @@
 
 	<!-- 自定义域realm -->
 	<bean id="myRealm" class="com.sun.shiro.MyRealm"
-		p:userService-ref="userService"/>
+		p:userService-ref="userService">
+		<!-- 配置密码匹配器 -->
+		<property name="credentialsMatcher">
+			<bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher"
+				p:hashAlgorithmName="MD5"
+				p:hashIterations="1024"/>
+		</property>	
+	</bean>
 	
 	<!-- 安全管理器 ref对象 -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager"
@@ -28,6 +35,8 @@
 				/login = anon
 				<!-- /** = authc 所有url必须认证通过才能访问 -->
 				/admin* = authc
+				/logout = logout
+				/** = authc
 			</value>
 		</property>
 	</bean>
