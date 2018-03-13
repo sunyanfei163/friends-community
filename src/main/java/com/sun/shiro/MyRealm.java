@@ -8,13 +8,16 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.util.ByteSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +25,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.sun.baisc.model.User;
 import com.sun.baisc.service.UserService;
 
-public class MyRealm extends AuthorizingRealm{
-	
+public class MyRealm extends AuthorizingRealm {
+
 	private static final Logger logger = LoggerFactory.getLogger(MyRealm.class);
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
@@ -48,25 +51,32 @@ public class MyRealm extends AuthorizingRealm{
 	}
 
 	@Override
-	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
+			throws AuthenticationException {
 		logger.info("======用户登录认证======");
 		String userName = authenticationToken.getPrincipal().toString();
 		User user = userService.getUserByUserName(userName);
-		if(user != null) {
-			AuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user.getUserName()
-					, user.getPassword(), getName());
-			setSession("currentUser", user);
-			return authenticationInfo;
+		if (user == null) {
+			throw new UnknownAccountException();
 		}
-		return null;
+		if(Boolean.TRUE.equals(user.getLocked())) {
+			throw new LockedAccountException();
+		}
+		AuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
+				user.getUserName(), 
+				user.getPassword(),
+				ByteSource.Util.bytes(user.getCredentialsSalt()),  //salt = username + salt
+				getName());
+//		setSession("currentUser", user);
+		return authenticationInfo;
 	}
-	
+
 	private void setSession(Object key, Object value) {
 		Subject currentUser = SecurityUtils.getSubject();
-		if(null != currentUser) {
+		if (null != currentUser) {
 			Session session = currentUser.getSession();
 			System.out.println("Session默认超时时间为【" + session.getTimeout() + "】毫秒");
-			if(null != session) {
+			if (null != session) {
 				session.setAttribute(key, value);
 			}
 		}
