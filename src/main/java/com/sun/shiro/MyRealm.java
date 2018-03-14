@@ -11,6 +11,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -80,6 +81,12 @@ public class MyRealm extends AuthorizingRealm {
 				session.setAttribute(key, value);
 			}
 		}
+	}
+	
+	@Override
+	public void setCredentialsMatcher(CredentialsMatcher credentialsMatcher) {
+		// TODO Auto-generated method stub
+		super.setCredentialsMatcher(credentialsMatcher);
 	}
 
 }
