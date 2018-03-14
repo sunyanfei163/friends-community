@@ -16,6 +16,7 @@
 		<config>src/main/resources/spring/basic/spring-user.xml</config>
 		<config>src/main/resources/spring-mongo.xml</config>
 		<config>src/main/resources/spring-shiro.xml</config>
+		<config>src/main/resources/spring/basic/spring-permission.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

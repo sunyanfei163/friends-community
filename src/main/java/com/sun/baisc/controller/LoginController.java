@@ -52,21 +52,23 @@ public class LoginController {
 	}
 	
 	@RequestMapping("/register")
-	public String register(User user, HttpServletRequest request, ModelMap mm) {
+	public ModelAndView register(User user, HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
 		String passwordValid = WebUtils.getCleanParam(request, "passwordValid");
-		String targetUrl = "/loginPage";
 		if(!passwordValid.equals(user.getPassword())) {
-			mm.addAttribute("errorMsg", "ÃÜÂë²»Ò»ÖÂ£¡");
-			targetUrl = "/registerPage";
+			mv.addObject("errorMsg", "ÃÜÂë²»Ò»ÖÂ£¡");
+			mv.setViewName("/register");
+		}else {
+			try {
+				userService.register(user);
+				mv.setViewName("/login");
+			} catch (Exception e) {
+				logger.info(e.getMessage());
+				mv.addObject("errorMsg", "×¢²áÊ§°Ü");
+				mv.setViewName("/register");
+			}
 		}
-		try {
-			userService.register(user);
-		} catch (Exception e) {
-			logger.info(e.getMessage());
-			mm.addAttribute("errorMsg", "×¢²áÊ§°Ü");
-			targetUrl = "/registerPage";
-		}
-		return targetUrl;
+		return mv;
 	}
 	
 	@RequestMapping("/validateCode")
@@ -100,7 +102,7 @@ public class LoginController {
 		try {
 			subject.login(usernamePasswordToken);
 			logger.info("======µÇÂ½³É¹¦======");
-			mv.setViewName("/index");
+			mv.setViewName("redirect:/index.html");
 		} catch (Exception e) {
 			logger.info("======µÇÂ¼Òì³£======");
 			e.printStackTrace();
@@ -108,6 +110,11 @@ public class LoginController {
 			mv.setViewName("/login");
 		}
 		return mv;
+	}
+	
+	@RequestMapping(value="/index")
+	public String index() {
+		return "/index";
 	}
 	
 	@RequiresRoles("admin")

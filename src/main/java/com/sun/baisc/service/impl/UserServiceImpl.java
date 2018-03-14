@@ -7,7 +7,9 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.sun.baisc.dao.PermissionDao;
 import com.sun.baisc.dao.UserDao;
+import com.sun.baisc.model.Permission;
 import com.sun.baisc.model.User;
 import com.sun.baisc.service.UserService;
 import com.sun.util.StringUtil;
@@ -17,8 +19,15 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private UserDao userDao;
 	
+	@Autowired
+	private PermissionDao permissionDao;
+	
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
+	}
+	
+	public void setPermissionDao(PermissionDao permissionDao) {
+		this.permissionDao = permissionDao;
 	}
 
 	public User getUserByUserName(String userName) {
@@ -51,5 +60,9 @@ public class UserServiceImpl implements UserService{
 		System.out.println(service.encryption(user));
 		user.setSalt("321");
 		System.out.println(service.encryption(user));
+	}
+
+	public List<Permission> queryPermissionsByName(String userName) {
+		return permissionDao.getPermissionsByUserName(userName);
 	}
 }

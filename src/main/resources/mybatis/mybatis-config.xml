@@ -33,5 +33,6 @@
 
 	<typeAliases>
 		<typeAlias type="com.sun.baisc.model.User" alias="User"/>
+		<typeAlias type="com.sun.baisc.model.Permission" alias="Permission"/>
 	</typeAliases>
 </configuration>

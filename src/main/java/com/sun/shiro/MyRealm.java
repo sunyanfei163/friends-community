@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.sun.baisc.model.Permission;
 import com.sun.baisc.model.User;
 import com.sun.baisc.service.UserService;
 
@@ -48,6 +49,12 @@ public class MyRealm extends AuthorizingRealm {
 			userRolesSet.add(role);
 		}
 		simpleAuthorizationInfo.setRoles(userRolesSet);
+		List<Permission> permissions = userService.queryPermissionsByName(userName);
+		Set<String> permissionsSet = new HashSet<String>();
+		for (Permission permission : permissions) {
+			permissionsSet.add(permission.getCode());
+		}
+		simpleAuthorizationInfo.setStringPermissions(permissionsSet);
 		return simpleAuthorizationInfo;
 	}
 
@@ -68,7 +75,7 @@ public class MyRealm extends AuthorizingRealm {
 				user.getPassword(),
 				ByteSource.Util.bytes(user.getCredentialsSalt()),  //salt = username + salt
 				getName());
-//		setSession("currentUser", user);
+		setSession("currentUser", user);
 		return authenticationInfo;
 	}
 

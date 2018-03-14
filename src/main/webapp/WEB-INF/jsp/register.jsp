@@ -11,10 +11,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap/bootstrap.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap/bootstrapValidator.min.css">
 <title>注册</title>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrapValidator.min.js"></script>
 </head>
 <body>
-	<form action="/">
+	<form action='<c:url value="/register.html"/>' class="center-block" style="width: 350px;">
+		<h1>注册</h1>
 		<div class="form-group">
 			<label for="userName">用户名</label> <input
 				type="text" class="form-control" id="userName" name="userName"
@@ -30,7 +35,7 @@
 				type="password" class="form-control" id="passwordValid" name="passwordValid"
 				placeholder="确认密码">
 		</div>
-		<c:if test="${empty errorMsg}">
+		<c:if test="${!empty errorMsg}">
 			<div class="form-group">
 				<label for="passwordValid" style="color: red;">${errorMsg}</label>
 			</div>
@@ -38,4 +43,40 @@
 		<button type="submit" class="btn btn-default">Submit</button>
 	</form>
 </body>
+<script type="text/javascript">
+	$(function(){
+		$('form').bootstrapValidator({
+			message:'This value is not valid',
+			feedbackIcons:{
+				valid:'glyphicon glyphicon-ok',
+				invalid:'glyohicon glyphicon-remove',
+				validating:'glyohicon glyphicon-refesh'
+			},
+			fields:{
+				userName:{
+					message:'用户名验证失败',
+					validators:{
+						notEmpty:{
+							message:'用户名不能为空'
+						}
+					}
+				},
+				password: {
+                    validators: {
+                        notEmpty: {
+                            message: '密码不能为空'
+                        }
+                    }
+                },
+                passwordValid: {
+                    validators: {
+                        notEmpty: {
+                            message: '确认密码不能为空'
+                        }
+                    }
+                }
+			}
+		})
+	});
+</script>
 </html>

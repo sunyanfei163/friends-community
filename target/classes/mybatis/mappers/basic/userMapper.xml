@@ -45,7 +45,7 @@
 				#{salt},
 				#{created},
 				#{createdBy},
-				#{updated},
+				SYSDATE,
 				#{updatedBy}
 			);
 	</insert>
