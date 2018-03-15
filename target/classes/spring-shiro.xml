@@ -24,18 +24,23 @@
 		<!-- 安全管理器 必须 -->
 		<property name="securityManager" ref="securityManager"/>
 		<!-- 身份认证失败 认证提交的地址 -->
-		<property name="loginUrl" value="/login.jsp"/>
-		<property name="successUrl" value="/index.jsp"></property>
+		<property name="loginUrl" value="/loginPage.html"/>
+		<property name="successUrl" value="/index.html"></property>
 		<!-- 权限认证失败  没有权限认证提交的地址 -->
-		<property name="unauthorizedUrl" value="/403.jsp"/>
+		<property name="unauthorizedUrl" value="/403.html"/>
 		<!-- shiro 连接约束配置，即过滤链的定义 -->
 		<property name="filterChainDefinitions">
 			<value>
+				/css/** = anon
+				/fonts/** = anon
+				/images/** = anon
+				/js/** = anon
 				/login* = anon
+				/validateCode* = anon
 				/register* = anon
-				<!-- /** = authc 所有url必须认证通过才能访问 -->
 				/admin* = authc
 				/logout = logout
+				/** = authc <!-- 所有url必须认证通过才能访问 -->
 			</value>
 		</property>
 	</bean>

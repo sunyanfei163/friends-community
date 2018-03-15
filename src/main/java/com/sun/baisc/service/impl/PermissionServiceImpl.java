@@ -28,7 +28,9 @@ public class PermissionServiceImpl implements PermissionService {
 		for (Permission permission : permissions) {
 			if(parentId == permission.getParentId()) {
 				JSONObject obj = new JSONObject();
-				obj.put(permission.getName(), permission.getUrl());
+				obj.put("name", permission.getName());
+				obj.put("url", permission.getUrl());
+				obj.put("id", permission.getId());
 				JSONArray childArr = getMenuByParentId(permission.getId(), permissions);
 				if(childArr.size() > 0) {
 					obj.put("child", childArr);

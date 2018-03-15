@@ -18,7 +18,7 @@
 	
 	<select id="getPermissionsByUserName" parameterType="string" resultMap="permissionMap">
 		SELECT
-			R.ID,
+			R.ID ROLE_ID,
 			R.ROLE_NAME,
 			P.ID,
 			P.`NAME`,
