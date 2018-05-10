@@ -16,7 +16,7 @@
 	content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap/bootstrap.css" type="text/css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/js/bootstrap-3.3.7-dist/css/bootstrap.min.css" type="text/css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/simple-line-icons.css" type="text/css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/app.css" type="text/css" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>

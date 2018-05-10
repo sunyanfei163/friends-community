@@ -17,14 +17,8 @@
 <meta name="description" content="侧边导航菜单(可分组折叠)" />
 <meta name="HandheldFriendly" content="True" />
 <link rel="shortcut icon" href="img/favicon.ico">
-<!-- Bootstrap3.3.5 CSS -->
-<link href="${pageContext.request.contextPath }/css/bootstrap/bootstrap.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/js/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!--[if lt IE 9]>
-            <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-            <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
 <style>
 .panel-group {
 	max-height: 770px;
@@ -69,8 +63,8 @@
 	<div class="row">
 		<div class="col-md-2">
 			<div id="menu" class="panel-group table-responsive" role="tablist">
-				<div class="panel panel-primary leftMenu">
-					<!-- 利用data-target指定要折叠的分组列表 -->
+				<!-- <div class="panel panel-primary leftMenu">
+					利用data-target指定要折叠的分组列表
 					<div class="panel-heading" id="collapseListGroupHeading1"
 						data-toggle="collapse" data-target="#collapseListGroup1"
 						role="tab">
@@ -78,46 +72,41 @@
 							分组1 <span class="glyphicon glyphicon-chevron-up right"></span>
 						</h4>
 					</div>
-					<!-- .panel-collapse和.collapse标明折叠元素 .in表示要显示出来 -->
+					.panel-collapse和.collapse标明折叠元素 .in表示要显示出来
 					<div id="collapseListGroup1" class="panel-collapse collapse in"
 						role="tabpanel" aria-labelledby="collapseListGroupHeading1">
 						<ul class="list-group">
 							<li class="list-group-item">
-								<!-- 利用data-target指定URL -->
+								利用data-target指定URL
 								<button class="menu-item-left" data-target="test2.html">
 									<span class="glyphicon glyphicon-triangle-right"></span>分组项1-1
 								</button>
 							</li>
 						</ul>
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		<div class="col-md-10">内容</div>
 	</div>
-	<!-- jQuery1.11.3 (necessary for Bo otstrap's JavaScript plugins) -->
 	<script src="${pageContext.request.contextPath }/js/jquery-3.3.1.min.js"></script>
-	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="${pageContext.request.contextPath }/js/bootstrap.min.js "></script>
+	<script src="${pageContext.request.contextPath }/js/bootstrap-3.3.7-dist/js/bootstrap.min.js "></script>
 	<script>
 		$(function() {
 			function childMenu(child,parentId,target){
-				$('#' + parentId).append(
-						"<div id='" + parentId + "' class='panel-collapse collapse in'" +
-						"role='tabpanel' aria-labelledby='collapseListGroupHeading1'> " +
-						"<ul class='list-group'>"
-				);
+				var htm = "<div id='collapseListGroup" + target + "' class='panel-collapse collapse in'" +
+						"role='tabpanel' aria-labelledby='collapseListGroupHeading" + target + "'> " +
+						"<ul class='list-group'>";
 				for (var i = 0; i < child.length; i++) {
-					$('#' + parentId).append(
-							"<li class='list-group-item'>" +
+					htm += "<li class='list-group-item'>" +
 							"<button class='menu-item-left' data-target='test2.html'>" +
-								"<span class='glyphicon glyphicon-triangle-right'></span>分组项1-1" +
+								"<span class='glyphicon glyphicon-triangle-right'></span>" + child[i]["name"] +
 							"</button>" +
-							"</li>"
-					);
+							"</li>";
 					
 				}
-				$('#' + parentId).append("</ul></div>");
+				htm += "</ul></div>";
+				$('#' + parentId).append(htm);
 			}
 			$.post('${pageContext.request.contextPath }/getMenu.html',
 					{userName:'<%=userName%>'},
@@ -125,18 +114,19 @@
 						for (var i = 0; i < data.length; i++) {
 							$('#menu').append("<div class='panel panel-primary leftMenu' id='leftMenu" 
 											+ data[i]["id"] + "'>" +
-									"<div class='panel-heading' id='collapseListGroupHeading1'" +
-										"data-toggle='collapse' data-target='#" + data[i]["id"] + "' role='tab'>" +
+									"<div class='panel-heading' id='collapseListGroupHeading" + data[i]["id"] +"'" +
+										"data-toggle='collapse' data-target='#collapseListGroup" + data[i]["id"] + "' role='tab'>" +
 										"<h4 class='panel-title'>"+ data[i]["name"] +
 											"<span class='glyphicon glyphicon-chevron-up right'></span>" +
 										"</h4>" +
 									"</div>");
 							if(data[i].child != undefined && data[i].child != null){
-								childMenu(data[i].child, "'leftMenu" + data[i]["id"] + "'", data[i]["id"]);
+								childMenu(data[i].child, "leftMenu" + data[i]["id"], data[i]["id"]);
 							}
 							$('#menu').append("</div>");
 						}
-					}
+					},
+					"json"
 			);
 			$(".panel-heading").click(function(e) {
 				/*切换折叠指示图标*/

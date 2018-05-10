@@ -10,12 +10,12 @@
 <html lang="zh-CN">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap/bootstrap.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap/bootstrapValidator.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/js/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/js/bootstrap-3.3.7-dist/css/bootstrapValidator.min.css">
 <title>注册</title>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrapValidator.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-3.3.7-dist/js/bootstrapValidator.min.js"></script>
 </head>
 <body>
 	<form action='<c:url value="/register.html"/>' class="center-block" style="width: 350px;">
